@@ -1,0 +1,42 @@
+{
+  "name": "buildcrew",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.15.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @buildcrew/server dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:e2e": "playwright test",
+    "test:acceptance": "vitest run --config vitest.acceptance.config.ts",
+    "test:acceptance:e2e": "playwright test tests/e2e/acceptance-flow.spec.ts",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "db:generate": "pnpm --filter @buildcrew/db generate",
+    "db:migrate": "pnpm --filter @buildcrew/db migrate",
+    "db:push": "pnpm --filter @buildcrew/db push",
+    "db:seed": "pnpm --filter @buildcrew/db seed"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/pg": "^8.20.0",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "@vitest/coverage-v8": "^4.1.0",
+    "eslint": "^8.57.0",
+    "pg": "^8.20.0",
+    "prettier": "^3.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.0"
+  }
+}

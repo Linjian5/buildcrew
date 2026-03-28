@@ -1,0 +1,318 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  
+  /* BuildCrew Brand Colors */
+  --bc-primary: #3B82F6; /* Electric blue */
+  --bc-secondary: #10B981; /* Emerald green */
+  --bc-accent: #F59E0B; /* Amber */
+  --bc-danger: #F43F5E; /* Rose */
+  
+  /* Department Colors */
+  --bc-engineering: #3B82F6;
+  --bc-design: #A855F7;
+  --bc-marketing: #14B8A6;
+  --bc-qa: #F59E0B;
+  --bc-devops: #6B7280;
+  --bc-content: #14B8A6;
+  --bc-executive: #8B5CF6;
+  
+  /* Light Mode Backgrounds */
+  --background: #FFFFFF;
+  --foreground: #0F172A;
+  --card: #F8FAFC;
+  --card-foreground: #0F172A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F172A;
+  --primary: #3B82F6;
+  --primary-foreground: #FFFFFF;
+  --secondary: #10B981;
+  --secondary-foreground: #FFFFFF;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --accent: #F59E0B;
+  --accent-foreground: #FFFFFF;
+  --destructive: #F43F5E;
+  --destructive-foreground: #FFFFFF;
+  --border: #E2E8F0;
+  --input: transparent;
+  --input-background: #F1F5F9;
+  --switch-background: #E2E8F0;
+  --font-weight-medium: 600;
+  --font-weight-normal: 400;
+  --ring: #94A3B8;
+  --chart-1: #3B82F6;
+  --chart-2: #10B981;
+  --chart-3: #F59E0B;
+  --chart-4: #A855F7;
+  --chart-5: #14B8A6;
+  --radius: 0.5rem;
+  --sidebar: #F8FAFC;
+  --sidebar-foreground: #0F172A;
+  --sidebar-primary: #3B82F6;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F1F5F9;
+  --sidebar-accent-foreground: #475569;
+  --sidebar-border: #E2E8F0;
+  --sidebar-ring: #94A3B8;
+}
+
+.dark {
+  /* Dark Mode Backgrounds - BuildCrew specific */
+  --background: #0A0A0F;
+  --foreground: #F8FAFC;
+  --card: #13131A;
+  --card-foreground: #F8FAFC;
+  --popover: #1E1E2A;
+  --popover-foreground: #F8FAFC;
+  --primary: #3B82F6;
+  --primary-foreground: #FFFFFF;
+  --secondary: #10B981;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1E1E2A;
+  --muted-foreground: #94A3B8;
+  --accent: #F59E0B;
+  --accent-foreground: #FFFFFF;
+  --destructive: #F43F5E;
+  --destructive-foreground: #FFFFFF;
+  --border: #1E293B;
+  --input: #1E1E2A;
+  --ring: #475569;
+  --font-weight-medium: 600;
+  --font-weight-normal: 400;
+  --chart-1: #3B82F6;
+  --chart-2: #10B981;
+  --chart-3: #F59E0B;
+  --chart-4: #A855F7;
+  --chart-5: #14B8A6;
+  --sidebar: #13131A;
+  --sidebar-foreground: #F8FAFC;
+  --sidebar-primary: #3B82F6;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1E1E2A;
+  --sidebar-accent-foreground: #F8FAFC;
+  --sidebar-border: #1E293B;
+  --sidebar-ring: #475569;
+}
+
+@theme inline {
+  /* Semantic colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Elevated surface (dark: #1E1E2A, light: #F1F5F9) */
+  --color-elevated: var(--muted);
+
+  /* Department colors — used for agent avatar rings & badges */
+  --color-dept-engineering: var(--bc-engineering);
+  --color-dept-design: var(--bc-design);
+  --color-dept-marketing: var(--bc-marketing);
+  --color-dept-qa: var(--bc-qa);
+  --color-dept-devops: var(--bc-devops);
+  --color-dept-content: var(--bc-content);
+  --color-dept-executive: var(--bc-executive);
+
+  /* Border radius — 4px grid */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Shadows (dark mode optimized) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  /* Font families */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  code, kbd, pre, samp {
+    @apply font-mono;
+  }
+  
+  /* Custom scrollbar styles */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.5);
+  }
+
+  /**
+  * Default typography styles for HTML elements (h1-h4, p, label, button, input).
+  * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
+  */
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1, h2, h3, h4 {
+    color: var(--foreground);
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--foreground);
+  }
+
+  button {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--foreground);
+  }
+
+  input {
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+    color: var(--foreground);
+  }
+
+  select {
+    color: var(--foreground);
+  }
+
+  textarea {
+    color: var(--foreground);
+  }
+
+  p {
+    color: var(--foreground);
+  }
+
+  span {
+    color: inherit;
+  }
+
+  td {
+    color: var(--foreground);
+  }
+
+  th {
+    color: var(--foreground);
+  }
+
+  li {
+    color: var(--foreground);
+  }
+}
+
+/* AgentCard animations */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes status-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--pulse-color, transparent); }
+  50% { box-shadow: 0 0 8px 2px var(--pulse-color, transparent); }
+}
+
+@keyframes active-task-glow {
+  0%, 100% { box-shadow: inset 2px 0 4px -2px rgba(59, 130, 246, 0.3); }
+  50% { box-shadow: inset 2px 0 8px -2px rgba(59, 130, 246, 0.6); }
+}
+/* Orbiting avatar animations */
+@keyframes orbit-cw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes orbit-ccw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.animate-orbit-outer { animation: orbit-ccw 30s linear infinite; }
+.animate-orbit-outer-reverse { animation: orbit-cw 30s linear infinite; }
+.animate-orbit-inner { animation: orbit-ccw 20s linear infinite; }
+.animate-orbit-inner-reverse { animation: orbit-cw 20s linear infinite; }
+
+@keyframes border-pulse {
+  0%, 100% { border-color: hsl(var(--primary) / 0.6); box-shadow: 0 0 0 0 hsl(var(--primary) / 0.15); }
+  50% { border-color: hsl(var(--primary) / 0.15); box-shadow: 0 0 12px 2px hsl(var(--primary) / 0.1); }
+}
+.animate-border-pulse { animation: border-pulse 2s ease-in-out infinite; }
