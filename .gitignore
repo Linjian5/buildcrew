@@ -13,6 +13,8 @@ coverage/
 .playwright-mcp/
 playwright-report/
 test-results/
-*.png
 *.mp4
+# Ignore screenshots except docs/images
+*.png
+!docs/images/*.png
 .omc/

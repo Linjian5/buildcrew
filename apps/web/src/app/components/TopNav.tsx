@@ -7,9 +7,9 @@ import {
   Menu,
   X,
   ChevronDown,
-  Key,
+  // Key,       // hidden: api-keys menu item temporarily disabled
   BarChart3,
-  CreditCard,
+  // CreditCard, // hidden: subscription menu item temporarily disabled
   ArrowLeftRight,
   PlusCircle,
   Moon,
@@ -308,6 +308,7 @@ export function TopNav({ onSearchClick }: TopNavProps) {
                       <User size={16} className="text-muted-foreground" />
                       {t('userMenu.profile')}
                     </button>
+                    {/* hidden: api-keys and subscription temporarily disabled
                     <button
                       className="flex w-full items-center gap-3 px-4 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
                       onClick={() => handleNavClick('/settings/api-keys')}
@@ -315,6 +316,7 @@ export function TopNav({ onSearchClick }: TopNavProps) {
                       <Key size={16} className="text-muted-foreground" />
                       {t('userMenu.modelApiKeys')}
                     </button>
+                    */}
                     <button
                       className="flex w-full items-center gap-3 px-4 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
                       onClick={() => handleNavClick('/settings/usage')}
@@ -322,6 +324,7 @@ export function TopNav({ onSearchClick }: TopNavProps) {
                       <BarChart3 size={16} className="text-muted-foreground" />
                       {t('userMenu.usage')}
                     </button>
+                    {/* hidden: subscription temporarily disabled
                     <button
                       className="flex w-full items-center gap-3 px-4 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
                       onClick={() => handleNavClick('/settings/subscription')}
@@ -329,6 +332,7 @@ export function TopNav({ onSearchClick }: TopNavProps) {
                       <CreditCard size={16} className="text-muted-foreground" />
                       {t('userMenu.subscription')}
                     </button>
+                    */}
                   </div>
 
                   <div className="mx-4 border-t border-border" />

@@ -66,11 +66,11 @@ import {
 // ---------------------------------------------------------------------------
 
 const tabs = [
-  { id: 'profile', labelKey: 'settings.tabs.profile', icon: User, group: 'Account' },
-  { id: 'api-keys', labelKey: 'settings.tabs.apiKeys', icon: Key, group: 'Account' },
-  { id: 'usage', labelKey: 'settings.tabs.usage', icon: BarChart3, group: 'Account' },
-  { id: 'subscription', labelKey: 'settings.tabs.subscription', icon: CreditCard, group: 'Account' },
-  { id: 'appearance', labelKey: 'settings.tabs.appearance', icon: Palette, group: 'Preferences' },
+  { id: 'profile', labelKey: 'settings.tabs.profile', icon: User, group: 'Account', hidden: false },
+  { id: 'api-keys', labelKey: 'settings.tabs.apiKeys', icon: Key, group: 'Account', hidden: true },
+  { id: 'usage', labelKey: 'settings.tabs.usage', icon: BarChart3, group: 'Account', hidden: true },
+  { id: 'subscription', labelKey: 'settings.tabs.subscription', icon: CreditCard, group: 'Account', hidden: true },
+  { id: 'appearance', labelKey: 'settings.tabs.appearance', icon: Palette, group: 'Preferences', hidden: false },
 ] as const;
 
 type SettingsTab = (typeof tabs)[number]['id'];
@@ -1203,10 +1203,10 @@ export function Settings() {
     }
   }, [activeTab]);
 
-  // Group tabs by section
+  // Group tabs by section; hidden tabs are excluded from the sidebar
   const groups = [
-    { label: t('settings.groups.account'), items: tabs.filter((t) => t.group === 'Account') },
-    { label: t('settings.groups.preferences'), items: tabs.filter((t) => t.group === 'Preferences') },
+    { label: t('settings.groups.account'), items: tabs.filter((t) => t.group === 'Account' && !t.hidden) },
+    { label: t('settings.groups.preferences'), items: tabs.filter((t) => t.group === 'Preferences' && !t.hidden) },
   ];
 
   return (

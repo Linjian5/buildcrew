@@ -535,8 +535,11 @@ export function ChatPanelContent({
   }, [threadId, currentCompanyId, executingPlanId, navigate]);
 
   const handleAdjustPlanInPanel = useCallback(() => {
-    // Clear ready state so buttons disappear; user continues chatting
     setExecutedPlanId(null);
+    // Nullify ready_to_execute actions so old buttons disappear
+    setMessages((prev) =>
+      prev.map((m) => (m.action?.type === 'ready_to_execute' ? { ...m, action: null } : m))
+    );
     requestAnimationFrame(() => inputFocusRef.current?.focus());
   }, []);
 

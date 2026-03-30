@@ -379,9 +379,13 @@ function CeoChatStep({
   })();
 
   const handleAdjustPlan = () => {
-    // Clear confirmed/ready state so old buttons disappear and "启动" reappears
     setConfirmedPlanId(null);
     setLaunchStatus('idle');
+    // Nullify ready_to_execute actions so latestReadyMsgId becomes null
+    // and the "启动" button reappears at the bottom
+    setMessages((prev) =>
+      prev.map((m) => (m.action?.type === 'ready_to_execute' ? { ...m, action: null } : m))
+    );
     inputRef.current?.focus();
   };
 
