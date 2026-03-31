@@ -1048,7 +1048,17 @@ export async function executeReadyPlan(params: { threadId: string; companyId: st
     messageType: 'text',
   });
 
-  // 4. Update workflow state → completed (initial setup done)
+  // 4. Mark all ready_to_execute messages as executed (Bug #22 — prevent button reappearing on refresh)
+  await db.update(chatMessages).set({
+    metadata: sql`jsonb_set(COALESCE(metadata, '{}'), '{action_type}', '"executed"')`,
+  }).where(
+    and(
+      eq(chatMessages.threadId, threadId),
+      sql`metadata->>'action_type' = 'ready_to_execute'`,
+    ),
+  );
+
+  // 5. Update workflow state → completed (initial setup done)
   await db.update(chatThreads).set({
     status: 'active',
     workflowState: 'completed',

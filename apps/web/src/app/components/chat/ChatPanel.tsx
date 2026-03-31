@@ -522,6 +522,10 @@ export function ChatPanelContent({
     setExecutingPlanId(msgId);
     try {
       await executePlan(currentCompanyId, threadId, getApiLocale());
+      // Nullify ready_to_execute actions immediately so buttons disappear in the current session
+      setMessages((prev) =>
+        prev.map((m) => (m.action?.type === 'ready_to_execute' ? { ...m, action: null } : m))
+      );
       setExecutedPlanId(msgId);
       localStorage.removeItem('bc-read-threads');
       await new Promise((r) => setTimeout(r, 1500));

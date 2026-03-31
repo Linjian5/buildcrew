@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useCallback, useEffect, useRef, type ReactNode } from 'react';
 import { getActiveThread, getChatThreads } from '../lib/api';
 import { useWebSocket } from '../hooks/useWebSocket';
+import { useAuth } from './AuthContext';
 import type { WsEventType } from '../types';
 
 const STORAGE_KEY = 'bc-unread-threads';
@@ -48,6 +49,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const unreadMapRef = useRef(unreadMap);
   unreadMapRef.current = unreadMap;
 
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
   const companyId = localStorage.getItem('bc-company-id') ?? '';
   const token = localStorage.getItem('buildcrew_token') ?? '';
 
@@ -59,9 +61,10 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     saveUnread(unreadMap);
   }, [unreadMap]);
 
-  // Load initial unread state from backend
+  // Load initial unread state from backend — wait for auth to settle first (Bug #20)
   useEffect(() => {
-    if (!companyId || !token) return;
+    if (authLoading || !isAuthenticated) return;
+    if (!companyId) return;
 
     // Get CEO agent id and check for unread messages
     getActiveThread(companyId)
@@ -98,7 +101,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         }
       })
       .catch(() => { /* ignore */ });
-  }, [companyId, token]);
+  }, [companyId, isAuthenticated, authLoading]);
 
   // WebSocket: listen for agent.message events
   const ws = useWebSocket({

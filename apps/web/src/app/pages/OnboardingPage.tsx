@@ -358,6 +358,10 @@ function CeoChatStep({
 
     try {
       await executePlan(companyId, threadId, getApiLocale());
+      // Nullify ready_to_execute actions immediately so buttons disappear
+      setMessages((prev) =>
+        prev.map((m) => (m.action?.type === 'ready_to_execute' ? { ...m, action: null } : m))
+      );
       setLaunchStatus('success');
       localStorage.removeItem('bc-read-threads');
       await new Promise((r) => setTimeout(r, 2000));

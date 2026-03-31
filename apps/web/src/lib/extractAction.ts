@@ -10,6 +10,8 @@ export interface ActionData {
 export function extractAction(text: string, metadata?: Record<string, unknown> | null): ActionData | null {
   // 1. Check metadata.action_type (canonical source from backend)
   if (metadata && typeof metadata.action_type === 'string') {
+    // Bug #22: executed plans should not render any action button
+    if (metadata.action_type === 'executed') return null;
     return { type: metadata.action_type, ...metadata } as ActionData;
   }
   // 2. Fallback: parse JSON code block
