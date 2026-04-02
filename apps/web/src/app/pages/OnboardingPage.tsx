@@ -397,7 +397,7 @@ function CeoChatStep({
     <div className="flex h-full flex-col">
       {/* Chat messages */}
       <div className="flex-1 overflow-y-auto px-4 py-6">
-        <div className="mx-auto flex max-w-2xl flex-col gap-4">
+        <div data-testid="onboarding-messages" className="mx-auto flex max-w-2xl flex-col gap-4">
           {messages.map((msg) => {
             const isReadyToExecute = msg.action?.type === 'ready_to_execute';
             const isLatestReady = isReadyToExecute && msg.id === latestReadyMsgId;
@@ -449,6 +449,7 @@ function CeoChatStep({
                 {showButtons && (
                   <div className="ml-13 mt-2 flex gap-2">
                     <button
+                      data-testid="onboarding-execute"
                       className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700 disabled:opacity-50 flex items-center gap-2"
                       onClick={() => {
                         setConfirmedPlanId(msg.id);
@@ -462,6 +463,7 @@ function CeoChatStep({
                       {t('onboarding.executeNow', '立即执行')}
                     </button>
                     <button
+                      data-testid="onboarding-adjust"
                       className="rounded-lg bg-muted px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted/80"
                       onClick={handleAdjustPlan}
                     >
@@ -478,6 +480,7 @@ function CeoChatStep({
             <div className="flex flex-wrap gap-2 pl-13">
               <button
                 className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700 disabled:opacity-50"
+                data-testid="onboarding-launch"
                 onClick={() => void handleLaunch()}
                 disabled={launching}
               >
@@ -496,7 +499,7 @@ function CeoChatStep({
 
           {/* Launch status feedback */}
           {(launchStatus === 'confirming' || launchStatus === 'executing') && (
-            <div className="mx-auto flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 px-5 py-3">
+            <div data-testid="onboarding-status" className="mx-auto flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 px-5 py-3">
               <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
               <span className="text-sm font-medium text-primary">
                 {launchStatus === 'confirming'
@@ -565,6 +568,7 @@ function CeoChatStep({
         <div className="mx-auto flex max-w-2xl items-center gap-2">
           <input
             ref={inputRef}
+            data-testid="onboarding-chat-input"
             className="flex-1 rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
             placeholder={t('onboarding.chatPlaceholder')}
             value={input}
@@ -573,6 +577,7 @@ function CeoChatStep({
             disabled={sending}
           />
           <button
+            data-testid="onboarding-send"
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
             onClick={handleSend}
             disabled={!input.trim() || sending}
@@ -672,6 +677,7 @@ export function OnboardingPage() {
                     className={`w-full rounded-lg border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 ${
                       showValidation && !companyName.trim() ? 'border-destructive' : 'border-border'
                     }`}
+                    data-testid="onboarding-company-name"
                     placeholder={t('onboarding.companyNamePlaceholder')}
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
@@ -686,6 +692,7 @@ export function OnboardingPage() {
                     className={`w-full resize-none rounded-lg border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 ${
                       showValidation && !mission.trim() ? 'border-destructive' : 'border-border'
                     }`}
+                    data-testid="onboarding-mission"
                     placeholder={t('onboarding.missionPlaceholder')}
                     rows={4}
                     value={mission}
@@ -700,12 +707,14 @@ export function OnboardingPage() {
                         ? 'bg-primary text-primary-foreground hover:bg-primary/90'
                         : 'bg-muted text-muted-foreground cursor-not-allowed'
                     }`}
+                    data-testid="onboarding-next"
                     onClick={handleNext}
                   >
                     {t('common.next')}
                   </button>
                   <button
                     className="text-sm text-muted-foreground underline transition-colors hover:text-foreground"
+                    data-testid="onboarding-skip"
                     onClick={() => navigate('/overview')}
                   >
                     {t('onboarding.skip')}
@@ -726,6 +735,7 @@ export function OnboardingPage() {
                     return (
                       <button
                         key={tmpl.id}
+                        data-testid={`onboarding-template-${tmpl.id}`}
                         className={`relative flex flex-col items-start gap-3 rounded-xl border p-4 text-left transition-all ${
                           isSelected
                             ? 'border-cyan-500/60 shadow-lg'

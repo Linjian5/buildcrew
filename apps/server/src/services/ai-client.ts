@@ -5,6 +5,7 @@ import { getProviderEndpoint, estimateCost } from '../lib/providers.js';
 import { emitEvent } from '../ws.js';
 import { env } from '../env.js';
 import { ensureWallet, deductCost, checkBalance } from './wallet.js';
+import { getMockAIResponse } from './ai-mock.js';
 
 // Platform key from env — NEVER exposed in logs, responses, or frontend
 const PLATFORM_KEY = env.PLATFORM_AI_KEY;
@@ -43,6 +44,11 @@ export interface AICallResult {
  * Falls back to user's own key if platform key unavailable.
  */
 export async function callAI(params: AICallParams): Promise<AICallResult> {
+  // Mock mode for E2E tests — deterministic, no real AI calls
+  if (env.MOCK_AI === 'true') {
+    return getMockAIResponse(params.messages, params.systemPrompt);
+  }
+
   // Ensure wallet exists for user
   await ensureWallet(params.userId);
 
@@ -345,6 +351,14 @@ export interface StreamChunk {
  * then yields chunks as the model generates them.
  */
 export async function* callAIStream(params: AICallParams): AsyncGenerator<StreamChunk> {
+  // Mock mode for E2E tests
+  if (env.MOCK_AI === 'true') {
+    const mock = getMockAIResponse(params.messages, params.systemPrompt);
+    yield { type: 'delta', content: mock.content };
+    yield { type: 'done', content: mock.content, tokenUsage: mock.tokenUsage, source: mock.source };
+    return;
+  }
+
   // Resolve key (same logic as callAI)
   let apiKey: string;
   let endpoint: string;

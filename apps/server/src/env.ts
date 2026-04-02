@@ -16,6 +16,8 @@ const envSchema = z.object({
   PLATFORM_AI_PROVIDER: z.string().default('deepseek'),
   PLATFORM_AI_MODEL: z.string().default('deepseek-chat'),
   PLATFORM_AI_ENDPOINT: z.string().default('https://api.deepseek.com/v1'),
+  // E2E testing: deterministic AI responses
+  MOCK_AI: z.enum(['true', 'false']).default('false'),
   // B-06: Wallet & billing
   INITIAL_BALANCE: z.coerce.number().default(1.00), // $1.00 initial credit for new users
   // Model pricing ($/1K tokens) — override in .env

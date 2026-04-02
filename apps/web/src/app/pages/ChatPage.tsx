@@ -102,7 +102,7 @@ function ConversationSidebar({
   };
 
   return (
-    <div className="flex h-full w-[280px] shrink-0 flex-col border-r border-border bg-card">
+    <div data-testid="chat-sidebar" className="flex h-full w-[280px] shrink-0 flex-col border-r border-border bg-card">
       <div className="border-b border-border px-4 py-3">
         <h2 className="text-sm font-semibold text-foreground">{t('chat.conversations')}</h2>
       </div>

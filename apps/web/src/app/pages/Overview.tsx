@@ -208,6 +208,7 @@ export function Overview() {
       {/* Row 1: Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
+          testId="overview-stat-agents"
           icon={Users}
           label={t('overview.activeAgents')}
           value={agents.length.toString()}
@@ -215,6 +216,7 @@ export function Overview() {
           variant="default"
         />
         <StatCard
+          testId="overview-stat-tasks"
           icon={CheckCircle2}
           label={t('overview.tasksToday')}
           value={`${taskStats.inProgress + taskStats.completed}`}
@@ -222,6 +224,7 @@ export function Overview() {
           variant={taskStats.blocked > 0 ? 'warning' : 'success'}
         />
         <StatCard
+          testId="overview-stat-spend"
           icon={DollarSign}
           label={t('overview.dailySpend')}
           value={`$${totalSpent.toFixed(2)}`}
@@ -229,6 +232,7 @@ export function Overview() {
           variant="default"
         />
         <StatCard
+          testId="overview-stat-guardian"
           icon={Shield}
           label={t('overview.guardianAlerts')}
           value="0"
@@ -244,6 +248,7 @@ export function Overview() {
           {/* Aria Summary Card */}
           {ariaSummary && (
             <button
+              data-testid="overview-aria-card"
               className={`flex w-full items-center gap-4 rounded-xl border bg-card p-4 text-left transition-colors hover:border-primary/30 ${
                 chatUnread > 0 && !ariaCardRead
                   ? 'animate-border-pulse border-primary/60'

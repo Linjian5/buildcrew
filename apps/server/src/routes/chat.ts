@@ -21,6 +21,8 @@ import {
   type CEOActionPayload,
 } from '../services/action-parser.js';
 import { onUserReturnAfterAbsence } from '../services/ceo-operations.js';
+import { getMockExtractedContext } from '../services/ai-mock.js';
+import { env } from '../env.js';
 
 const router = Router();
 
@@ -783,20 +785,27 @@ export async function executeConfirmPlan(params: ConfirmPlanParams): Promise<Con
 
   const runtime = ceo.runtimeConfig as { provider?: string; model?: string } | null;
 
-  const extractResult = await callAI({
-    userId, agentId: ceo.id, companyId,
-    provider: runtime?.provider ?? 'deepseek', model: runtime?.model ?? 'deepseek-chat',
-    systemPrompt: CONTEXT_EXTRACT_PROMPT,
-    messages: [{ role: 'user', content: `Company: ${company?.name ?? 'Unknown'}\nMission: ${company?.mission ?? 'Not set'}\nTemplate: ${company?.template ?? 'custom'}\n\nFull conversation:\n${conversationText}` }],
-    requestType: 'plan_parsing', allowPlatformKey: true, maxTokens: 1200,
-  });
-
   let extracted: ExtractedContext | null = null;
-  try { extracted = JSON.parse(extractResult.content.trim()); } catch {}
-  if (!extracted) {
-    const m = extractResult.content.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/);
-    if (m?.[1]) { try { extracted = JSON.parse(m[1]); } catch {} }
+
+  // Mock mode: skip AI call, use deterministic plan data
+  if (env.MOCK_AI === 'true') {
+    extracted = getMockExtractedContext(language) as unknown as ExtractedContext;
+  } else {
+    const extractResult = await callAI({
+      userId, agentId: ceo.id, companyId,
+      provider: runtime?.provider ?? 'deepseek', model: runtime?.model ?? 'deepseek-chat',
+      systemPrompt: CONTEXT_EXTRACT_PROMPT,
+      messages: [{ role: 'user', content: `Company: ${company?.name ?? 'Unknown'}\nMission: ${company?.mission ?? 'Not set'}\nTemplate: ${company?.template ?? 'custom'}\n\nFull conversation:\n${conversationText}` }],
+      requestType: 'plan_parsing', allowPlatformKey: true, maxTokens: 1200,
+    });
+
+    try { extracted = JSON.parse(extractResult.content.trim()); } catch {}
+    if (!extracted) {
+      const m = extractResult.content.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/);
+      if (m?.[1]) { try { extracted = JSON.parse(m[1]); } catch {} }
+    }
   }
+
   if (!extracted) {
     return { error: { code: 'EXTRACT_FAILED', message: 'Failed to analyze conversation.' }, httpStatus: 500 };
   }

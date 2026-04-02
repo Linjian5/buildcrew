@@ -246,7 +246,7 @@ function ChatMessages({
   }, [messages, isTyping]);
 
   return (
-    <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-thin">
+    <div ref={scrollRef} data-testid="chat-messages" className="flex-1 overflow-y-auto scrollbar-thin">
       <div className="py-4">
         {messages.map((msg) => {
           if (msg.type === 'plan') {
@@ -299,6 +299,7 @@ function ChatMessages({
                   {isAgent && msg.action?.type === 'ready_to_execute' && msg.id === latestReadyMsgId && msg.id !== executedPlanId && (
                     <div className="mt-2 flex gap-2">
                       <button
+                        data-testid="chat-execute-btn"
                         className="flex items-center gap-1.5 rounded-lg bg-green-600 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-green-700 disabled:opacity-50"
                         onClick={() => onExecutePlan?.(msg.id)}
                         disabled={!!executingPlanId}
@@ -357,6 +358,7 @@ function ChatInput({ onSend, focusRef }: { onSend: (text: string) => void; focus
       <div className="flex items-center gap-2">
         <input
           ref={resolvedRef}
+          data-testid="chat-input"
           type="text"
           className="flex-1 rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
           placeholder={t('chat.inputPlaceholder')}
@@ -370,6 +372,7 @@ function ChatInput({ onSend, focusRef }: { onSend: (text: string) => void; focus
           }}
         />
         <button
+          data-testid="chat-send"
           className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
           onClick={handleSend}
           disabled={!text.trim()}
